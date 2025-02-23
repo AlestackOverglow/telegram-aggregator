@@ -2,6 +2,8 @@
 
 App that aggregates posts from multiple Telegram channels into a single target channel. Built with Telethon library and managed through Saved Messages.
 
+If you find this project helpful, please consider giving it a star ⭐ It helps others discover the project and motivates further development.
+
 ## Table of Contents
 - [Features](#features)
 - [Setup and Running](#setup-and-running)
