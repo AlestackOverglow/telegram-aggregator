@@ -22,6 +22,9 @@ class MessageHandler:
 
     async def _handle_album_message(self, message: Message, target_channel_id: int) -> None:
         """Handle message that is part of an album"""
+        if not message.grouped_id:
+            return
+            
         group_id = str(message.grouped_id)
         
         if group_id not in self.album_cache:
@@ -29,17 +32,16 @@ class MessageHandler:
         
         self.album_cache[group_id].append(message)
         
-        # Get all messages from the same chat with this grouped_id
         try:
+            # Get all messages from the same chat with this grouped_id
             messages = await message.client.get_messages(
-                message.peer_id,
-                limit=10,  # Reasonable limit for album size
-                filter=lambda m: m.grouped_id == message.grouped_id
+                message.chat_id,  # Using chat_id instead of peer_id
+                limit=100,  # Increased limit to ensure we get all messages
+                filter=lambda m: isinstance(m, Message) and m.grouped_id == message.grouped_id
             )
-            total_messages = len(messages)
             
             # If we have all messages in the album
-            if len(self.album_cache[group_id]) >= total_messages:
+            if len(self.album_cache[group_id]) >= len(messages):
                 # Sort messages by ID to maintain order
                 album = sorted(self.album_cache[group_id], key=lambda x: x.id)
                 await self._forward_album(album, target_channel_id)
