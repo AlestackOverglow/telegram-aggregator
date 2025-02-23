@@ -59,8 +59,10 @@ python main.py
 4. First launch:
    - Enter Telegram verification code
    - Enter 2FA password (if enabled)
-   - **IMPORTANT:** Send `/start` to Saved Messages to begin aggregation
-   - The bot will not aggregate any messages until you send the `/start` command
+   - ⚠️**IMPORTANT:** Send `/start` to Saved Messages to begin aggregation, you only need to use this command every time you restart the bot, the rest of the settings are saved
+   - Set target channel using `/set_target` command
+   - Add at least one source channel `/add_channel <channel>` or all `/add_all_channels`
+   - The bot will not aggregate any messages until these steps are completed.
 
 ### Background Running
 
@@ -99,14 +101,6 @@ WantedBy=multi-user.target
 ```
 
 ## Usage
-
-### Initial Setup
-⚠️ **CRITICAL:** After launching the bot, you MUST:
-1. Send `/start` command to your Saved Messages
-2. Set target channel using `/set_target` command
-3. Add at least one source channel
-
-The bot will not aggregate any messages until these steps are completed.
 
 ### Commands
 All commands are sent to Saved Messages:
