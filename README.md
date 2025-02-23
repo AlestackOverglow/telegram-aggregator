@@ -1,6 +1,6 @@
 # Telegram Channel Aggregator Bot
 
-A bot that aggregates posts from multiple Telegram channels into a single target channel. Built with Telethon library and managed through Saved Messages.
+App that aggregates posts from multiple Telegram channels into a single target channel. Built with Telethon library and managed through Saved Messages.
 
 ## Table of Contents
 - [Features](#features)
@@ -33,8 +33,8 @@ A bot that aggregates posts from multiple Telegram channels into a single target
 ### Quick Start
 1. Clone and install dependencies:
 ```bash
-git clone [repository-url]
-cd [repository-name]
+git clone https://github.com/AlestackOverglow/telegram-aggregator.git
+cd telegram-aggregator
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
 venv\Scripts\activate     # Windows
