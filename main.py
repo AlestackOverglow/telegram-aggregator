@@ -125,28 +125,42 @@ class ChannelAggregator:
         """Register handler for new messages in channels"""
         @self.client.on(events.NewMessage)
         async def handle_new_message(event):
-            if not self.command_handler.is_running:
-                return
-
-            # Check if message is from monitored channel
-            if not event.is_channel:
-                return
-            
-            channel_id = event.message.peer_id.channel_id
-            if channel_id not in self.storage.get_channels():
-                return
-
-            # Check if target channel is set
-            target_channel = self.storage.get_target()
-            if not target_channel:
-                logger.warning("Target channel not set")
-                return
-
-            # Process message
             try:
-                await self.message_handler.process_message(event.message, target_channel)
+                # Log basic message info
+                logger.debug(f"Received message {event.message.id} from chat {event.message.chat_id}")
+                
+                if not self.command_handler.is_running:
+                    logger.debug("Bot is not running, skipping message")
+                    return
+
+                # Check if message is from channel
+                if not event.is_channel:
+                    logger.debug("Message is not from channel, skipping")
+                    return
+                
+                channel_id = event.message.peer_id.channel_id
+                logger.debug(f"Message is from channel {channel_id}")
+                
+                # Check if channel is monitored
+                monitored_channels = self.storage.get_channels()
+                if channel_id not in monitored_channels:
+                    logger.debug(f"Channel {channel_id} is not in monitored list: {monitored_channels}")
+                    return
+
+                # Check if target channel is set
+                target_channel = self.storage.get_target()
+                if not target_channel:
+                    logger.warning("Target channel not set")
+                    return
+
+                # Process message
+                try:
+                    logger.debug(f"Processing message {event.message.id} from channel {channel_id} to target {target_channel}")
+                    await self.message_handler.process_message(event.message, target_channel)
+                except Exception as e:
+                    logger.error(f"Error processing message {event.message.id}: {str(e)}")
             except Exception as e:
-                logger.error(f"Error processing message: {str(e)}")
+                logger.error(f"Error in message handler: {str(e)}")
 
 async def main():
     try:
