@@ -1,6 +1,6 @@
 # Telegram Channel Aggregator Bot
 
-App that aggregates posts from multiple Telegram channels into a single target channel. Built with Telethon library and managed through Saved Messages. The main idea is to implement a news feed like in other social networks
+App that aggregates posts from multiple Telegram channels into a single target channel. Built with Telethon library and managed through Saved Messages. The main idea is to implement a news feed like in other social networks.
 
 If you find this project helpful, please consider giving it a star ⭐ It helps others discover the project and motivates further development.
 
