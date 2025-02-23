@@ -1,0 +1,149 @@
+# Telegram Channel Aggregator Bot
+
+A bot that aggregates posts from multiple Telegram channels into a single target channel. Built with Telethon library and managed through Saved Messages.
+
+## Table of Contents
+- [Features](#features)
+- [Setup and Running](#setup-and-running)
+  - [Requirements](#requirements)
+  - [Quick Start](#quick-start)
+  - [Background Running](#background-running)
+- [Usage](#usage)
+  - [Commands](#commands)
+  - [Channel Setup](#channel-setup)
+- [Technical Info](#technical-info)
+  - [Configuration](#configuration)
+  - [Troubleshooting](#troubleshooting)
+
+## Features
+- Combines posts from multiple channels into one
+- Preserves media album structure
+- Management through Saved Messages
+- Concurrent post processing
+- Persistent settings between restarts
+- Independent session management
+
+## Setup and Running
+
+### Requirements
+- Python 3.7+
+- Telegram account
+- Telegram API keys (get at https://my.telegram.org/apps)
+
+### Quick Start
+1. Clone and install dependencies:
+```bash
+git clone [repository-url]
+cd [repository-name]
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+pip install -r requirements.txt
+```
+
+2. Create `.env` file:
+```
+API_ID=your_api_id
+API_HASH=your_api_hash
+PHONE_NUMBER=+1234567890
+```
+
+3. Run the bot:
+```bash
+python main.py
+```
+
+4. First launch:
+   - Enter Telegram verification code
+   - Enter 2FA password (if enabled)
+   - Send `/start` to Saved Messages
+
+### Background Running
+
+**Linux/Mac**:
+```bash
+source venv/bin/activate && nohup python main.py > output.log 2>&1 &
+```
+
+**Windows**:
+1. Create `run_bot.bat`:
+```batch
+@echo off
+call venv\Scripts\activate
+python main.py
+pause
+```
+2. Run the batch file
+
+**Linux Autostart** with systemd:
+```ini
+[Unit]
+Description=Telegram Channel Aggregator Bot
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/path/to/bot
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/path/to/bot/venv/bin/python main.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+## Usage
+
+### Commands
+All commands are sent to Saved Messages:
+- `/start` - Start the bot
+- `/stop` - Stop the bot
+- `/set_target <channel>` - Set target channel
+- `/add_channel <channel>` - Add source channel
+- `/add_all_channels` - Add all subscribed channels
+- `/remove_channel <channel>` - Remove channel
+- `/list` - List all channels
+- `/status` - Show bot status
+
+### Channel Setup
+
+1. **Target Channel**:
+   - Create or use existing channel
+   - Make bot an admin
+   - Set with `/set_target @channel`
+
+2. **Source Channels**:
+   - One by one: `/add_channel @channel`
+   - All at once: `/add_all_channels`
+   - Formats: `@username`, `https://t.me/channel`, `username`
+
+## Technical Info
+
+### Configuration
+- `.env` - API keys and phone
+- `sessions/` - Session files
+- `channels.json` - Channel settings
+- `bot.log` - Logs (1MB rotation)
+
+### Troubleshooting
+
+1. **Import/Init Errors**:
+   - Update code
+   - Restart bot
+
+2. **2FA Issues**:
+   - Enter password when prompted
+   - Restart if error occurs
+
+3. **Channel Access Issues**:
+   - Check channel membership
+   - Verify access rights
+   - Test with regular client
+
+4. **Session Problems**:
+   - Delete `sessions` folder
+   - Reauthorize
+
+Detailed logs in `bot.log` 

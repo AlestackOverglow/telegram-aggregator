@@ -1,0 +1,48 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Python files
+*.py text diff=python
+*.pyw text diff=python
+*.pyi text diff=python
+
+# Documentation
+*.md text diff=markdown
+*.txt text
+*.rst text
+LICENSE text
+
+# Configs
+*.cfg text
+*.ini text
+*.yml text
+*.yaml text
+*.json text
+.env.example text
+
+# Git files
+.gitattributes text
+.gitignore text
+.gitconfig text
+
+# Scripts
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary files
+*.db binary
+*.p binary
+*.pkl binary
+*.pickle binary
+*.pyc binary
+*.pyd binary
+*.pyo binary
+*.session binary
+*.session-journal binary
+
+# Exclude from language statistics
+sessions/* linguist-vendored
+*.session linguist-vendored
+*.session-journal linguist-vendored 
